@@ -2,10 +2,12 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
 	"os/signal"
+	"strings"
 
 	"github.com/EricNeid/go-webserver-gin/server"
 	"github.com/gin-gonic/gin"
@@ -13,9 +15,10 @@ import (
 )
 
 var (
-	logFile    string = "logs/webserver.log"
-	listenAddr string = ":5000"
-	basePath   string = ""
+	logFile     string = "logs/webserver.log"
+	listenAddr  string = ":5000"
+	basePath    string = ""
+	serveStatic string = ""
 )
 
 func main() {
@@ -26,9 +29,13 @@ func main() {
 	if value, isSet := os.LookupEnv("BASE_PATH"); isSet {
 		basePath = value
 	}
+	if value, isSet := os.LookupEnv("SERVE_STATIC"); isSet {
+		serveStatic = value
+	}
 	// cli arguments can override environment variables
 	flag.StringVar(&listenAddr, "listen-addr", listenAddr, "server listen address")
 	flag.StringVar(&basePath, "base-path", basePath, "base path to serve endpoints")
+	flag.StringVar(&serveStatic, "serve-static", serveStatic, "serve static files, ie. public=>/dashboard")
 	flag.Parse()
 
 	// print system proxy
@@ -64,6 +71,15 @@ func main() {
 	gin.SetMode(gin.ReleaseMode)
 	srv := server.NewApplicationServer(listenAddr, basePath, &logService)
 
+	if serveStatic != "" {
+		root, path, err := parseServeStaticArg(serveStatic)
+		if err != nil {
+			log.Fatalln("main", "could not serve static files", err)
+		} else {
+			srv.Router.Static(path, root)
+		}
+	}
+
 	go srv.GracefullShutdown(quit, done)
 
 	// start listening
@@ -74,4 +90,12 @@ func main() {
 	// wait for shutdown
 	<-done
 	log.Println("main", "server stopped")
+}
+
+func parseServeStaticArg(arg string) (root string, relativePath string, err error) {
+	segments := strings.Split(arg, "=>")
+	if len(segments) != 2 {
+		return "", "", fmt.Errorf("Invalid argument given %s, expecting root=>relativePath", arg)
+	}
+	return segments[0], segments[1], nil
 }

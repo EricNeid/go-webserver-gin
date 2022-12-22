@@ -27,6 +27,7 @@ environment variables or a combination of both.
 
 * listen-addr/LISTEN_ADDR - listing address, ie. ":5000"
 * base-path/BASE_PATH - base path to serve application, ie "/custom"
+* serve-static/SERVE-STATIC - folder containing static html and the path to serve it, ie. "public=>/dashboard"
 
 Example:
 

@@ -12,7 +12,7 @@ import (
 )
 
 // ApplicationServer is a simple wrapper around our web service.
-// It provides gracefull shutdown among other things.
+// It provides graceful shutdown among other things.
 type ApplicationServer struct {
 	webserver *http.Server
 	Router    *gin.Engine
@@ -70,17 +70,17 @@ func (srv *ApplicationServer) ListenAndServe() error {
 	return srv.webserver.ListenAndServe()
 }
 
-// GracefullShutdown initiates a gracefull shutdown.
-func (srv *ApplicationServer) GracefullShutdown(quit <-chan os.Signal, done chan<- bool) {
+// GracefulShutdown initiates a graceful shutdown.
+func (srv *ApplicationServer) GracefulShutdown(quit <-chan os.Signal, done chan<- bool) {
 	<-quit
-	log.Println("GracefullShutdown", "server is shutting down...")
+	log.Println("GracefulShutdown", "server is shutting down...")
 
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 
 	srv.webserver.SetKeepAlivesEnabled(false)
 	if err := srv.webserver.Shutdown(ctx); err != nil {
-		log.Fatalln("GracefullShutdown", "could not gracefully shutdown the server", err)
+		log.Panicln("GracefulShutdown", "could not gracefully shutdown the server", err)
 	}
 
 	close(done)

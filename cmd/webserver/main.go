@@ -15,10 +15,10 @@ import (
 )
 
 var (
-	logFile     string = "logs/webserver.log"
-	listenAddr  string = ":5000"
-	basePath    string = ""
-	serveStatic string = ""
+	logFile     = "logs/webserver.log"
+	listenAddr  = ":5000"
+	basePath    = ""
+	serveStatic = ""
 )
 
 func main() {
@@ -54,14 +54,14 @@ func main() {
 			Filename:   logFile,
 			MaxSize:    500, // megabytes
 			MaxBackups: 3,
-			MaxAge:     28, //days
+			MaxAge:     28, // days
 		},
 	)
 	gin.DefaultWriter = logOut
 	log.SetOutput(logOut)
 	log.SetPrefix("[APP] ")
 
-	// prepare gracefull shutdown channel
+	// prepare graceful shutdown channel
 	done := make(chan bool, 1)
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, os.Interrupt)
@@ -80,7 +80,7 @@ func main() {
 		}
 	}
 
-	go srv.GracefullShutdown(quit, done)
+	go srv.GracefulShutdown(quit, done)
 
 	// start listening
 	if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
@@ -92,10 +92,10 @@ func main() {
 	log.Println("main", "server stopped")
 }
 
-func parseServeStaticArg(arg string) (root string, relativePath string, err error) {
+func parseServeStaticArg(arg string) (root, relativePath string, err error) {
 	segments := strings.Split(arg, "=>")
 	if len(segments) != 2 {
-		return "", "", fmt.Errorf("Invalid argument given %s, expecting root=>relativePath", arg)
+		return "", "", fmt.Errorf("invalid argument given %s, expecting root=>relativePath", arg)
 	}
 	return segments[0], segments[1], nil
 }

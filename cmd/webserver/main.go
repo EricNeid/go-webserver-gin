@@ -10,6 +10,7 @@ import (
 	"strings"
 
 	"github.com/EricNeid/go-webserver-gin/server"
+	"github.com/EricNeid/go-webserver-gin/writer"
 	"github.com/gin-gonic/gin"
 	"gopkg.in/natefinch/lumberjack.v2"
 )
@@ -47,7 +48,7 @@ func main() {
 	logService := server.LogService{
 		Max: 5000,
 	}
-	logOut := LazyMultiWriter(
+	logOut := writer.LazyMultiWriter(
 		os.Stdout,
 		&logService,
 		&lumberjack.Logger{

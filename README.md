@@ -5,7 +5,8 @@ SPDX-License-Identifier: CC-BY-4.0
 <!-- markdownlint-disable MD022 MD032 MD024-->
 <!-- markdownlint-disable MD041-->
 [![Go Report Card](https://goreportcard.com/badge/github.com/EricNeid/go-webserver-gin?style=flat-square)](https://goreportcard.com/report/github.com/EricNeid/go-webserver-gin)
-![Go](https://github.com/EricNeid/go-webserver-gin/workflows/Go/badge.svg)
+![Test](https://github.com/EricNeid/go-webserver-gin/actions/workflows/tests.yml/badge.svg)
+![Linting](https://github.com/EricNeid/go-webserver-gin/actions/workflows/linting.yml/badge.svg)
 [![Go Doc](https://img.shields.io/badge/godoc-reference-blue.svg?style=flat-square)](http://godoc.org/github.com/EricNeid/go-webserver-gin)
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/EricNeid/go-webserver-gin)
 

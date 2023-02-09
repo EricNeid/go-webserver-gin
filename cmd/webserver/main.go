@@ -39,11 +39,6 @@ func main() {
 	flag.StringVar(&serveStatic, "serve-static", serveStatic, "serve static files, ie. public=>/dashboard")
 	flag.Parse()
 
-	// print system proxy
-	log.Println("main", "using system proxy")
-	log.Println("main", "HTTP_PROXY:", os.Getenv("HTTP_PROXY"))
-	log.Println("main", "HTTPS_PROXY:", os.Getenv("HTTPS_PROXY"))
-
 	// prepare logging and gin
 	logService := server.LogService{
 		Max: 5000,
@@ -61,6 +56,13 @@ func main() {
 	gin.DefaultWriter = logOut
 	log.SetOutput(logOut)
 	log.SetPrefix("[APP] ")
+
+	log.Println("main", "starting application")
+
+	// print system proxy
+	log.Println("main", "using system proxy")
+	log.Println("main", "HTTP_PROXY:", os.Getenv("HTTP_PROXY"))
+	log.Println("main", "HTTPS_PROXY:", os.Getenv("HTTPS_PROXY"))
 
 	// prepare graceful shutdown channel
 	done := make(chan bool, 1)

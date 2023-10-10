@@ -4,6 +4,8 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
+
+## 0.2.0 - 2023-10-10
 ### Changed
 * Update go to 1.21
 

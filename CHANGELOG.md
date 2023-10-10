@@ -4,6 +4,8 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
+### Changed
+* Update go to 1.21
 
 ## 0.1.0 - 2022-12-22
 ### Added

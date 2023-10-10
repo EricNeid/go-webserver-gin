@@ -77,10 +77,9 @@ func main() {
 	if serveStatic != "" {
 		root, path, err := parseServeStaticArg(serveStatic)
 		if err != nil {
-			log.Fatalln("main", "could not serve static files", err)
-		} else {
-			srv.Router.Static(path, root)
+			log.Panicln("main", "could not serve static files", err)
 		}
+		srv.Router.Static(path, root)
 	}
 
 	go srv.GracefulShutdown(quit, done)

@@ -40,7 +40,7 @@ func TestNormalizePath(t *testing.T) {
 func TestWelcome(t *testing.T) {
 	// arrange
 	gin.SetMode(gin.TestMode)
-	req := httptest.NewRequest("GET", "/", nil)
+	req := httptest.NewRequest("GET", "/", http.NoBody)
 	rec := httptest.NewRecorder()
 	unit := NewApplicationServer(":5001", "", nil)
 	// action
@@ -53,7 +53,7 @@ func TestWelcome(t *testing.T) {
 func TestInstallGETHandler(t *testing.T) {
 	// arrange
 	gin.SetMode(gin.TestMode)
-	req := httptest.NewRequest("GET", "/foobar", nil)
+	req := httptest.NewRequest("GET", "/foobar", http.NoBody)
 	rec := httptest.NewRecorder()
 	unit := NewApplicationServer(":5001", "", nil)
 	// action
@@ -66,7 +66,7 @@ func TestInstallGETHandler(t *testing.T) {
 func TestInstallGETHandler_shouldEnsurePath(t *testing.T) {
 	// arrange
 	gin.SetMode(gin.TestMode)
-	req := httptest.NewRequest("GET", "/foobar", nil)
+	req := httptest.NewRequest("GET", "/foobar", http.NoBody)
 	rec := httptest.NewRecorder()
 	unit := NewApplicationServer(":5001", "", nil)
 	// action
@@ -79,7 +79,7 @@ func TestInstallGETHandler_shouldEnsurePath(t *testing.T) {
 func TestInstallGETHandler_withBasePath(t *testing.T) {
 	// arrange
 	gin.SetMode(gin.TestMode)
-	req := httptest.NewRequest("GET", "/base/foobar", nil)
+	req := httptest.NewRequest("GET", "/base/foobar", http.NoBody)
 	rec := httptest.NewRecorder()
 	unit := NewApplicationServer(":5001", "base", nil)
 	// action

@@ -1,5 +1,6 @@
 DIR := ${CURDIR}
-GO_IMAGE := golang:1.20.0-alpine
+GO_IMAGE := golang:1.21-alpine
+LINTER_IMAGE := golangci/golangci-lint:v1.54-alpine
 
 .PHONY: build-windows
 build-windows:
@@ -39,7 +40,7 @@ lint:
 	docker run -it --rm \
 		-e CGO_ENABLED=0 \
 		-w /app -v ${DIR}:/app \
-		golangci/golangci-lint:v1.50.1 \
+		${LINTER_IMAGE} \
 		golangci-lint run ./...
 
 

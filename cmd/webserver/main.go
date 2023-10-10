@@ -41,7 +41,8 @@ func main() {
 
 	// prepare logging and gin
 	logService := server.LogService{
-		Max: 5000,
+		Max:              5000,
+		MaxMessageLength: 250,
 	}
 	logOut := writer.LazyMultiWriter(
 		os.Stdout,

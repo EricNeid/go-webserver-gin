@@ -8,6 +8,7 @@ import (
 	"os"
 	"os/signal"
 	"strings"
+	"syscall"
 
 	"github.com/EricNeid/go-webserver-gin/server"
 	"github.com/EricNeid/go-webserver-gin/writer"
@@ -68,7 +69,7 @@ func main() {
 	// prepare graceful shutdown channel
 	done := make(chan bool, 1)
 	quit := make(chan os.Signal, 1)
-	signal.Notify(quit, os.Interrupt)
+	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 
 	// create server
 	log.Println("main", "creating server")

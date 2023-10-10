@@ -72,6 +72,7 @@ func (srv *ApplicationServer) ListenAndServe() error {
 
 // GracefulShutdown initiates a graceful shutdown.
 func (srv *ApplicationServer) GracefulShutdown(quit <-chan os.Signal, done chan<- bool) {
+	log.Println("GracefulShutdown", "waiting for shutdown signal")
 	<-quit
 	log.Println("GracefulShutdown", "server is shutting down...")
 
